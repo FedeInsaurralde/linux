@@ -30,14 +30,17 @@
 #define VCCAUX_REG_SIZE               2
 #define VCCBRAM_REG_OFFSET            0x18
 #define VCCBRAM_REG_SIZE              2
-#define VAUX9_REG_OFFSET			  0x20	//Agregado
+#define VAUX1_REG_OFFSET			  0x20	//Agregado
+#define VAUX1_REG_SIZE                2		//Agregado
+#define VAUX9_REG_OFFSET			  0x28	//Agregado
 #define VAUX9_REG_SIZE                2		//Agregado
 
 #define CHANNEL_TEMP                  0
 #define CHANNEL_VCCINT                0
 #define CHANNEL_VCCAUX                1
 #define CHANNEL_VCCBRAM               2
-#define CHANNEL_VAUX9                 3		//Agregado
+#define CHANNEL_VAUX1                 3		//Agregado
+#define CHANNEL_VAUX9                 4		//Agregado
 
 struct litex_hwmon {
 	void __iomem     *membase;
@@ -102,6 +105,10 @@ static inline int litex_read_in(struct litex_hwmon *hwmon_s, u32 attr,
 		offset = VCCBRAM_REG_OFFSET;
 		size = VCCBRAM_REG_SIZE;
 		break;
+	case CHANNEL_VAUX1:					//Agregado
+		offset = VAUX1_REG_OFFSET;
+		size = VAUX1_REG_SIZE;
+		break;
 	case CHANNEL_VAUX9:					//Agregado
 		offset = VAUX9_REG_OFFSET;
 		size = VAUX9_REG_SIZE;
@@ -162,6 +169,7 @@ static const unsigned int litex_vcc_config[] = {
 	HWMON_I_INPUT,
 	HWMON_I_INPUT,
 	HWMON_I_INPUT,
+	HWMON_I_INPUT,	//Agregado
 	HWMON_I_INPUT,	//Agregado
 	0
 };
