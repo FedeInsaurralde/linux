@@ -63,7 +63,12 @@ static inline long litex_supp_transfer_fun(long val)
 
 static inline long litex_vaux9_transfer_fun(long val)		//Agregado
 {
-	return ((val * 4) / 4096);			//Tener en cuenta que cada Ampere equivale a una lectura de 250mV y el ADC mide entre 0 y 1V 
+	return ((val * 4000) / 4096);			//Tener en cuenta que cada Ampere equivale a una lectura de 250mV y el ADC mide entre 0 y 1V 
+}
+
+static inline long litex_vaux1_transfer_fun(long val)		//Agregado
+{
+	return ((val * 5999) / 4096);			//Tener en cuenta que la tension de entrada se divide por 5.99 ya que el ADC mide entre 0 y 1V 
 }
 
 static inline int litex_read_temp(struct litex_hwmon *hwmon_s, u32 attr,
@@ -118,8 +123,18 @@ static inline int litex_read_in(struct litex_hwmon *hwmon_s, u32 attr,
 	}
 
 	raw_data = litex_get_reg(hwmon_s->membase + offset, size);
-	*val = litex_supp_transfer_fun(raw_data);
-	return 0;
+
+	if (channel == CHANNEL_VAUX1){						//Agregado
+		*val = litex_vaux1_transfer_fun(raw_data);
+		return 0;
+	}
+	if (channel == CHANNEL_VAUX9){						//Agregado
+		*val = litex_vaux9_transfer_fun(raw_data);
+		return 0;
+	else
+		*val = litex_supp_transfer_fun(raw_data);
+		return 0;
+	}
 }
 
 /* API functions */
