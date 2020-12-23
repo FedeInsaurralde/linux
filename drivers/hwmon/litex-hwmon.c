@@ -131,7 +131,9 @@ static inline int litex_read_in(struct litex_hwmon *hwmon_s, u32 attr,
 	if (channel == CHANNEL_VAUX9){						//Agregado
 		*val = litex_vaux9_transfer_fun(raw_data);
 		return 0;
+	}
 	else
+	{
 		*val = litex_supp_transfer_fun(raw_data);
 		return 0;
 	}
