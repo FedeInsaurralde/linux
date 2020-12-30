@@ -68,7 +68,7 @@ static inline long litex_vaux9_transfer_fun(long val)		//Agregado
 
 static inline long litex_vaux1_transfer_fun(long val)		//Agregado
 {
-	return ((val * 5999) / 4096);			//Tener en cuenta que la tension de entrada se divide por 5.99 ya que el ADC mide entre 0 y 1V 
+	return ((val * 5990 * 16) / 4096);			//Tener en cuenta que la tension de entrada se divide por 5.99 ya que el ADC mide entre 0 y 1V 
 }
 
 static inline int litex_read_temp(struct litex_hwmon *hwmon_s, u32 attr,
